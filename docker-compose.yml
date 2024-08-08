@@ -10,7 +10,7 @@ services:
       MYSQL_HOST: mysql
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
-      MYSQL_DB: myDb
+      MYSQL_DB: messageapp
     depends_on:
       - mysql
 
@@ -20,7 +20,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: myDb
+      MYSQL_DATABASE: messageapp
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
     volumes:

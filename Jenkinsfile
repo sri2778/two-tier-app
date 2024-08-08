@@ -4,24 +4,24 @@ pipeline {
     stages{
         stage("Code"){
             steps{
-                git url: "https://github.com/LondheShubham153/two-tier-flask-app.git", branch: "jenkins"
+                git url: "https://github.com/sri2778/two-tier-app.git", branch: "main"
             }
         }
-        stage("Build & Test"){
+        stage("Build Image"){
             steps{
-                sh "docker build . -t flaskapp"
+                sh "docker build -t messageapp ."
             }
         }
         stage("Push to DockerHub"){
             steps{
-                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                    sh "docker tag flaskapp ${env.dockerHubUser}/flaskapp:latest"
-                    sh "docker push ${env.dockerHubUser}/flaskapp:latest" 
+                withCredentials([usernamePassword(credentialsId:"dockerhub",passwordVariable:"dockerhubpass",usernameVariable:"dockerhubuser")]){
+                    sh "docker login -u ${env.dockerhubuser} -p ${env.dockerhubpass}"
+                    sh "docker tag messageapp ${env.dockerhubuser}/messageapp:latest"
+                    sh "docker push ${env.dockerhubuser}/messageapp:latest" 
                 }
             }
         }
-        stage("Deploy"){
+        stage("Deploy application"){
             steps{
                 sh "docker-compose down && docker-compose up -d"
             }
